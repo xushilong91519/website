@@ -1,0 +1,57 @@
+<!-- order.html -->
+{% extends 'web1/base.html' %}
+{% block title %}{{order.order_number}}{% endblock%}
+{% block headmmessage %}
+<h3 id='order_number' style='font-family:微软雅黑;'>{{order.order_number}}</h3>
+<button type='button' onclick='edit_order()' id='order_edit_button'>Edit</button>
+{% endblock %}
+{% block content %}
+<table id='order_content' class='table table-bordered table-striped' style='width:800px;'>
+    <tr><td>Order Number</td><td>{{order.order_number}}</td></tr>
+    <tr><td>Customer Code</td><td>{{order.customer_code}}</td></tr>
+    <tr><td>Order Date</td><td>{{order.order_date}}</td></tr>
+    <tr><td>Assign Date</td><td>{{order.assign_date}}</td></tr>
+    <tr><td>Survey Locations</td><td>{{order.survey_locations}}</td></tr>
+    <tr><td>Depot Code</td><td>{{order.depot_code}}</td></tr>
+    <tr><td>Depot Name</td><td>{{order.depot_name}}</td></tr>
+    <tr><td>Unit Type</td><td>{{order.unit_type}}</td></tr>
+    <tr><td>Qty</td><td>{{order.qty}}</td></tr>
+    <tr><td>Release Number</td><td>{{order.release_number}}</td></tr>
+    <tr><td>Survey Code</td><td>{{order.survey_code}}</td></tr>
+    <tr><td>Remark</td><td>{{order.remark}}</td></tr>
+</table>
+<script>
+    function edit_order(){
+        order_table=document.getElementById('order_content');
+	order_info=order_table.children[0];
+	const_attrs=['order_number','order_date','assign_date'];
+	for(var i=0;i<order_info.childElementCount;i++){
+            tname=order_info.children[i].children[0].innerHTML.toLowerCase().replace(' ','_');
+	    if(const_attrs.includes(tname)){
+		continue;
+	    }
+            ihtml=order_info.children[i].children[1].innerHTML;
+	    order_info.children[i].children[1].innerHTML=`<input type='text' name=${tname} value=${ihtml} style="width:300px;text-align:left;">`;
+	}
+	button=document.getElementById('order_edit_button');
+	button.disabled='true';
+	previous_parent=order_table.parentElement;
+	order_edit_form=document.createElement('form');
+	order_number=document.getElementById('order_number').innerHTML;
+	order_edit_form.action='/edit_order/'+order_number+'/';
+	order_edit_form.method='post';
+	order_edit_form.onsubmit='return checkForm()';
+	order_edit_form.appendChild(order_table);
+	previous_parent.appendChild(order_edit_form);
+	button=document.createElement('button');
+	button.type='submit';
+	button.innerHTML='Submit';
+	order_edit_form.appendChild(button);
+}
+</script>
+<script>
+	function checkForm(){
+	    return true;
+	}
+</script>
+{% endblock %}

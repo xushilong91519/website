@@ -3,6 +3,6 @@ from . import views
 
 app_name='web1'
 urlpatterns=[
-        path('',views.manage_post,name='manage_post'),
-        path('detail/',views.post_detail,name='post_detail'),
+        path('',views.manage_order,name='manage_order'),
+        path('<str:order_number>/',views.order_detail,name='order_detail'),
 ]

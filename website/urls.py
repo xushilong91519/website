@@ -19,6 +19,9 @@ from web1 import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/',views.home),
-    path('post/',include('web1.urls')),
+    path('',views.manage_order),
+    path('order/',include('web1.urls')),
+    path('add_order/',views.add_order),
+    path('submit_order/',views.submit_order),
+    path('edit_order/<str:order_number>/',views.edit_order),
 ]
