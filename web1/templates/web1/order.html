@@ -3,10 +3,11 @@
 {% block title %}{{order.order_number}}{% endblock%}
 {% block headmmessage %}
 <h3 id='order_number' style='font-family:微软雅黑;'>{{order.order_number}}</h3>
-<button type='button' onclick='edit_order()' id='order_edit_button'>Edit</button>
+<button type='button' onclick='edit_order()' id='order_edit_button' style="border-top-right-radius:5px; border-top-left-radius:5px; border-bottom-left-radius:5px; border-bottom-right-radius:5px;" >Edit</button>
 {% endblock %}
 {% block content %}
-<table id='order_content' class='table table-bordered table-striped' style='width:800px;'>
+{% csrf_token %}
+<table id='order_content' class='table table-bordered table-striped'>
     <tr><td>Order Number</td><td>{{order.order_number}}</td></tr>
     <tr><td>Customer Code</td><td>{{order.customer_code}}</td></tr>
     <tr><td>Order Date</td><td>{{order.order_date}}</td></tr>
@@ -24,7 +25,7 @@
     function edit_order(){
         order_table=document.getElementById('order_content');
 	order_info=order_table.children[0];
-	const_attrs=['order_number','order_date','assign_date'];
+	const_attrs=['order_number','order_date','assign_date','qty'];
 	for(var i=0;i<order_info.childElementCount;i++){
             tname=order_info.children[i].children[0].innerHTML.toLowerCase().replace(' ','_');
 	    if(const_attrs.includes(tname)){

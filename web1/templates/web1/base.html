@@ -18,36 +18,19 @@
 <body>
     <div class='container-fluid'>
         {% include 'web1/header.html'%}
-        <div class='well' style="text-align:center;background:#ffffff">
-<!--            <div class='col-sm-2 col-md-2'>
-                <div class='panel panel-default'>  
-                    <div class='panel=heading'>
-                        <h3>MENU</h3>
-                    </div>
-                    <div class='panel-body'>
-                        <div class='list-group'>
-                            <a href='/' class='list-group-item'>HOME</a>
-                            <a href='http://tieba.baidu.com' class='list-group-item'>百度贴吧</a>
-                            <a href='http://weibo.com' class='list-group-item'>新浪微博</a>
-                            <a href='https://www.youtube.com' class='list-group-item'>Youtube</a>
-                        </div>
-                    </div>
+        <div class='col-sm-6 col-md-6' style='background:#ffffff;border-top-right-radius:4px; border-top-left-radius:4px; border-bottom-left-radius:4px; border-bottom-right-radius:4px;border:1px groove  #d6dad4;'>
+            <div class='panel panel-default' style='background:#70c048;border-top-right-radius:10px; border-top-left-radius:10px;border-bottom-left-radius:10px; border-bottom-right-radius:10px;margin-left:4px;margin-top:17px;margin-right:3px;'>
+                <div class='panel-heading' style='background:#70c048;text-align:left;border-top-right-radius:10px; border-top-left-radius:10px;border-bottom:#70c048'>
+                    {% block headmmessage %}{% endblock %}
                 </div>
-</div> -->
-<!--            <div class='col-sm-10 col-md-10' style='background:#70c048;'> -->
-                <div class='panel panel-default' style='width:800px;background:#70c048;border-top-right-radius:10px; border-top-left-radius:10px; border-bottom-left-radius:10px; border-bottom-right-radius:10px;'>
-                    <div class='panel-heading' style='width:800px;background:#70c048;text-align:left;border-top-right-radius:10px; border-top-left-radius:10px;'>
-                        {% block headmmessage %}{% endblock %}
-                    </div>
-                    <div class='panel body' style='width:800px;text-align:left;border-top-right-radius:1px; border-top-left-radius:1px;border-bottom-left-radius:1px; border-bottom-right-radius:1px;'>
-                        {% block content %} {% endblock %}
-                    </div>
-                    <div class='panel-footer' >
-                        {% include 'web1/footer.html' %}
-                    </div>
+                <div class='panel body' style='text-align:left;margin-left:15px;margin-right:15px;'>
+                    {% block content %} {% endblock %}
                 </div>
-<!--</div> -->
-	</div>
+                <div class='panel-footer' >
+                    {% include 'web1/footer.html' %}
+                </div>
+            </div>
+        </di>
     </div>
 </body>
 </html>
