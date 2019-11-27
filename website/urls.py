@@ -22,6 +22,7 @@ urlpatterns = [
     path('',views.manage_order),
     path('order/',include('web1.urls')),
     path('add_order/',views.add_order),
-    path('submit_order/',views.submit_order),
+    path('submit_order/<str:order_number>/',views.submit_order),
     path('edit_order/<str:order_number>/',views.edit_order),
+    path('container/<str:container_number>/',views.container_detail),
 ]

@@ -19,7 +19,7 @@
     <tr><td>Qty</td><td>{{order.qty}}</td></tr>
     <tr><td>Release Number</td><td>{{order.release_number}}</td></tr>
     <tr><td>Survey Code</td><td>{{order.survey_code}}</td></tr>
-    <tr><td>Container Numbers</td><td><ul>{% for container in containers %}<li><a href='/container/{{container.container_number}}/'>{{container.container_number}}</a></li>{% endfor %}</ul></td></tr>
+    <tr><td>Container Numbers</td><td><ul>{% for container in containers %}<li><a href='/container/{{container.container_number}}/'>{{container.container_number}}</li>{% endfor %}</ul></td></tr>
     <tr><td>Remark</td><td>{{order.remark}}</td></tr>
 </table>
 <script>
@@ -59,7 +59,8 @@
 </script>
 {% endblock %}
 {% block container-message %}
-<h3 id='container_info' style='font-family:微软雅黑;'>Container</h3>
+<h3 id='container_number' style='font-family:微软雅黑;'>Container#{{container.container_number}}</h3>
 {% endblock %}
 {% block container-content %}
+<p>{{container.content}}</p>
 {% endblock %}

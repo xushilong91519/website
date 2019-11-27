@@ -2,28 +2,86 @@
 {% extends 'web1/base.html' %}
 {% block title %}New Order{% endblock%}
 {% block headmmessage %}
-<h3 style='font-family:微软雅黑;'>{{order.order_number}}</h3>
-    <a style='font-family:微软雅黑;' href='/'>回首页</a>
+<!-- <h3 style='font-family:微软雅黑;'></h3> -->
+<a style='font-family:微软雅黑;' href='/'><button class='btn' type="button" style='margin-left:6px;' onclick='add_row()'><i class="fa fa-trash"> Cancel</i></button></a>
 {% endblock %}
 {% block content %}
-<form id='submit_order' action='/submit_order/' method='post'>
+<form id='submit_order' action='/submit_order/{{new_order_number}}/' method='post' onsubmit='return submit_order_form()'>
 {% csrf_token %}	I
     <table class='table table-bordered table-striped'>
-        <tr><td style='text-align:center;'>Order Number</td><td><input type='text' name='order_number' style="width:300px;text-align:left;"></td></tr>
-        <tr><td style='text-align:center;'>Customer Code</td><td><input type='text' name='customer_code' style="width:300px;text-align:left;"></td></tr>
-	<tr><td style='text-align:center;'>Order Date</td><td><input type='date' name='order_date' style="width:300px;text-align:left;"></td></tr>
+	<tr><td style='text-align:center;'>Order Number</td><td>{{new_order_number}}</td></tr>
+        <tr><td style='text-align:center;'>Customer Code</td><td><input type='text' name='customer_code' style="width:300px;text-align:left;" autocomplete='off'></td></tr>
+	<tr><td style='text-align:center;'>Order Date</td><td><input type='date' name='order_date' style="width:300px;text-align:left;"></td></td></tr>
         <tr><td style='text-align:center;'>Assign Date</td><td><input type='date' name='assign_date' style="width:300px;text-align:left;"></td></tr>
-	<tr><td style='text-align:center;'>Survey Locations</td><td><input type='text' name='survey_locations' style="width:300px;text-align:left;"></td></tr>
-        <tr><td style='text-align:center;'>Depot Code</td><td><input type='text' name='depot_code' style="width:300px;text-align:left;"></td></tr>
-        <tr><td style='text-align:center;'>Depot Name</td><td><input type='text' name='depot_name' style="width:300px;text-align:left;"></td></tr>
+	<tr><td style='text-align:center;'>Survey Locations</td><td><input type='text' name='survey_locations' style="width:300px;text-align:left;" autocomplete='off'></td></tr>
+        <tr><td style='text-align:center;'>Depot Code</td><td><input type='text' name='depot_code' style="width:300px;text-align:left;" autocomplete='off'></td></tr>
+        <tr><td style='text-align:center;'>Depot Name</td><td><input type='text' name='depot_name' style="width:300px;text-align:left;" autocomplete='off'></td></tr>
         <tr><td style='text-align:center;'>Unit Type</td><td><input type='text' name='unit_type' style="width:300px;text-align:left;"></td></tr>
-        <tr><td style='text-align:center;'>Qty</td><td><input type='text' name='qty' style="width:300px;text-align:left;"></td></tr>
-        <tr><td style='text-align:center;'>Release Number</td><td><input type='text' name='release_number' style="width:300px;text-align:left;"></td></tr>
-        <tr><td style='text-align:center;'>Survey Code</td><td><input type='text' name='survey_code' style="width:300px;text-align:left;"></td></tr>
-        <tr><td style='text-align:center;'>Remark</td><td><input type='text' name='remark' style="width:300px;text-align:left;"></td></tr>
+        <tr><td style='text-align:center;'>Qty</td><td><input type='text' name='qty' style="width:300px;text-align:left;" autocomplete='off'></td></tr>
+        <tr><td style='text-align:center;'>Release Number</td><td><input type='text' name='release_number' style="width:300px;text-align:left;" autocomplete='off'></td></tr>
+        <tr><td style='text-align:center;'>Survey Code</td><td><input type='text' name='survey_code' style="width:300px;text-align:left;" autocomplete='off'></td></tr>
+	<tr><td style='text-align:center;'>Container Number</td><td id='container_numbers'><button class='btn' id='container_add_button' type="button" style='margin-left:6px;' onclick='add_row()'><i class="fa fa-plus"></i></button></td><td id='container_contents'></td></tr>
+	<tr><td style='text-align:center;'>Remark</td><td><input type='text' name='remark' style="width:300px;text-align:left;"></td></tr>
     </table>
-    <input type='submit' value='Submit' style="height:40px;width:100px;border-top-right-radius:3px; border-top-left-radius:3px; border-bottom-left-radius:3px; border-bottom-right-radius:3px;">
+    <input type='hidden' id='container_count' name='container_count' value=0>
+    <button type='submit' style="height:40px;width:100px;border-top-right-radius:3px; border-top-left-radius:3px; border-bottom-left-radius:3px; border-bottom-right-radius:3px;margin-left:10px;margin-bottom:10px;background-color:#70c048;">Submit</button>
     <br/>
 </form>
-{% endblock %}
+<script>
+    function add_row(){
+	button=document.getElementById('container_add_button');
+	button.disabled='true';
+        containers=document.getElementById('container_numbers');
+        count_node=document.getElementById('container_count');
+        add_icon=containers.lastChild;
+        current_container_count=(containers.childElementCount-1)/2;
+        containers.insertBefore(document.createElement('br'),add_icon);
+        new_input=document.createElement('input');
+        new_input.type='text';
+        new_input.name='container'+current_container_count;
+	new_input.id=new_input.name;
+        new_input.autocomplete='off';
+        new_input.style="width:300px;text-align:left;margin-top:3px;";
+        tmp=Number(count_node.value);
+        containers.insertBefore(new_input,add_icon);
+        count_node.setAttribute('value',tmp+1);
+	button=document.createElement('button');
+	button.type='button';
+	button.id='save_content_button';
+	button.setAttribute('onclick','save_container()');
+	button.innerHTML='Save';
+	document.getElementById('container_content').appendChild(button);
+	new_content=document.createElement('textarea');
+	new_content.name=new_input.name+'_content';
+	new_content.id='modifying_content';
+	new_content.style='border-top-right-radius:3px; border-top-left-radius:3px; border-bottom-left-radius:3px; border-bottom-right-radius:3px;resize:vertical;width:100%;height:500px;';
+	document.getElementById('container_content').appendChild(new_content);
+    }
+</script>
+<script>
+    function save_container(){
+	content=document.getElementById('modifying_content');
+	saved_content=document.createElement('input');
+	saved_content.type='hidden';
+	saved_content.name=content.name;
+	saved_content.value=content.value;
+	contents_node=document.getElementById('container_contents');
+	contents_node.appendChild(saved_content);
+	content.remove();
+	document.getElementById('save_content_button').remove();
+	button=document.getElementById('container_add_button');
+        button.removeAttribute('disabled');
+    }
+</script>
+<script>
+    function submit_order_form(){
+        return true;
+    }
+</script>
 
+{% endblock %}
+{% block container-message %}
+<h3 id='container_info' style='font-family:微软雅黑;'>Container</h3>
+{% endblock %}
+{% block container-content %}
+{% endblock %}

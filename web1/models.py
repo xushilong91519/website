@@ -13,10 +13,18 @@ class Order(models.Model):
     depot_name=models.CharField(max_length=200)
     unit_type=models.CharField(max_length=200)
     qty=models.IntegerField()
-    release_number=models.CharField(max_length=200)
-    container_number=models.CharField(max_length=200)
+    release_number=models.CharField(max_length=200,default='0')
     survey_code=models.CharField(max_length=200)
     remark=models.TextField()
 
     def __str__(self):
         return self.order_number
+
+class Container(models.Model):
+    order=models.ForeignKey(Order,on_delete=models.CASCADE)
+    container_number=models.CharField(max_length=200)
+    content=models.TextField()
+
+    def __str__(self):
+        return self.container_number
+

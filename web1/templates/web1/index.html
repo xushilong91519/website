@@ -2,7 +2,7 @@
 {% extends 'web1/base.html' %}
 {% block title %}Order Manager{% endblock %}
 {% block headmmessage %}
-    <h3 style='font-family:楷体;'>Order List</h3>
+    <h3 id='container_info' style='font-family:微软雅黑;'>Order List</h3>
     <script type="text/javascript"> 
     <!-- 
     function MM_jumpMenu(targ,selObj,restore){ //v3.0 
@@ -19,4 +19,9 @@
 	    <tr><td><a href="{% url 'web1:order_detail' order.order_number %}">{{order.order_number}}</a></td><td>{{order.customer_code}}</td><td>{{order.order_date}}</td></tr>
         {% endfor %}
     </table>
+{% endblock %}
+{% block container-message %}
+<h3 id='container_info' style='font-family:微软雅黑;'>Container</h3>
+{% endblock %}
+{% block container-content %}
 {% endblock %}
